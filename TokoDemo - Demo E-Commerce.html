@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TokoDemo - Demo E-Commerce</title>
+<style>
+:root{--bg:#f4f6fa;--card:#fff;--tx:#1b2433;--mut:#6b7686;--bd:#e1e6ee;--ac:#2563eb;--ac2:#eaf1ff;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1520;--card:#182131;--tx:#e8edf5;--mut:#93a0b4;--bd:#273247;--ac:#5b8def;--ac2:#1c2a46}}
+:root[data-theme="dark"]{--bg:#0f1520;--card:#182131;--tx:#e8edf5;--mut:#93a0b4;--bd:#273247;--ac:#5b8def;--ac2:#1c2a46}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.note{background:var(--ac);color:#fff;text-align:center;font-size:12px;padding:5px 8px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--card);border-bottom:1px solid var(--bd)}
+.bar{max-width:1100px;margin:auto;display:flex;gap:10px;align-items:center;padding:10px 14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:20px;color:var(--ac)}
+.search{flex:1;min-width:140px;padding:8px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
+.nav button{background:none;border:0;padding:8px 10px;border-radius:8px;color:var(--mut);font-weight:600}
+.nav button.on{background:var(--ac2);color:var(--ac)}
+.cartb{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:8px 14px;font-weight:600}
+main{max-width:1100px;margin:auto;padding:14px}
+.hero{background:linear-gradient(120deg,#2563eb,#7c3aed);color:#fff;border-radius:16px;padding:26px 22px;margin-bottom:14px}
+.hero h1{margin:0 0 4px;font-size:24px}.hero p{margin:0 0 12px;opacity:.9}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px}
+.chip{white-space:nowrap;border:1px solid var(--bd);background:var(--card);border-radius:20px;padding:6px 14px}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
+.pic{height:120px;display:flex;align-items:center;justify-content:center;font-size:52px}
+.pb{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px;flex:1}
+.pn{font-weight:600;font-size:14px}.pm{color:var(--mut);font-size:12px}.pr{font-weight:700;color:var(--ac)}
+.old{text-decoration:line-through;color:var(--mut);font-weight:400;font-size:12px;margin-left:4px}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:9px 14px;font-weight:600}
+.btn.sec{background:var(--ac2);color:var(--ac)}.btn.ok{background:var(--ok)}
+.pc .btn{margin-top:8px;padding:7px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:30;display:none;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.ov.show{display:block}
+.modal{background:var(--card);max-width:520px;margin:5vh auto;border-radius:16px;overflow:auto;max-height:90%}
+.drawer{background:var(--card);width:min(400px,100%);height:100%;margin-left:auto;display:flex;flex-direction:column}
+.dh{padding:14px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font-weight:700}
+.db{flex:1;overflow:auto;padding:12px 14px}.df{padding:14px;border-top:1px solid var(--bd)}
+.x{background:none;border:0;font-size:20px;color:var(--mut)}
+.ci{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}
+.ci .e{font-size:30px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:10px}
+.qty{display:flex;align-items:center;gap:8px}.qty button{width:26px;height:26px;border-radius:8px;border:1px solid var(--bd);background:var(--card)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:12px}
+.card h3{margin:0 0 10px;font-size:16px}
+.two{display:grid;grid-template-columns:1fr 340px;gap:14px}
+@media(max-width:800px){.two{grid-template-columns:1fr}}
+label.f{display:block;font-size:12px;color:var(--mut);margin:8px 0 3px}
+input.i,select.i{width:100%;padding:9px 11px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
+.opt{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 11px;border:1px solid var(--bd);border-radius:10px;margin-bottom:6px;cursor:pointer}
+.opt.on{border-color:var(--ac);background:var(--ac2)}
+.row{display:flex;justify-content:space-between;margin:5px 0}.tot{font-weight:800;font-size:17px;border-top:1px solid var(--bd);padding-top:8px;margin-top:8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:12px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px}.stat b{display:block;font-size:20px}.stat span{color:var(--mut);font-size:12px}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mut);font-weight:600}
+.tag{padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;background:var(--ac2);color:var(--ac)}
+.tag.g{background:#dcfce7;color:#15803d}.tag.y{background:#fef3c7;color:#b45309}.tag.r{background:#fee2e2;color:#b91c1c}
+.chart{display:flex;align-items:flex-end;gap:10px;height:130px}.chart div{flex:1;background:var(--ac);border-radius:6px 6px 0 0;position:relative;min-height:4px}
+.chart small{position:absolute;bottom:-18px;left:0;right:0;text-align:center;color:var(--mut);font-size:11px}
+.ctr{text-align:center;padding:30px 10px}.big{font-size:56px}
+</style>
+</head>
+<body>
+<div class="note">MODE DEMO &middot; Semua data statis, tidak ada transaksi nyata</div>
+<header><div class="bar">
+<span class="logo">🛍️ TokoDemo</span>
+<input class="search" id="q" placeholder="Cari produk...">
+<span class="nav"><button id="n-store" onclick="go('store')">Toko</button><button id="n-admin" onclick="go('admin')">Admin</button></span>
+<button class="cartb" onclick="openCart()">🛒 <span id="cc">0</span></button>
+</div></header>
+<main id="app"></main>
+<div class="ov" id="ovm" onclick="if(event.target===this)closeAll()"><div class="modal" id="modal"></div></div>
+<div class="ov" id="ovc" onclick="if(event.target===this)closeAll()"><div class="drawer" id="drawer"></div></div>
+
+<script>
+const $=s=>document.querySelector(s), rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+const C=['#dbeafe','#fce7f3','#dcfce7','#fef3c7','#ede9fe','#ffedd5'];
+const PR=[
+[1,'Kemeja Linen Pria','Fashion','👔',189000,229000,4.8,24,'Kemeja linen adem, nyaman untuk kerja dan santai. Tersedia ukuran S-XL.'],
+[2,'Sneakers Urban','Fashion','👟',349000,0,4.7,15,'Sneakers ringan dengan sol empuk, cocok dipakai seharian.'],
+[3,'Tas Ransel Laptop','Fashion','🎒',259000,299000,4.6,30,'Ransel anti air muat laptop 15 inci, dengan port USB charging.'],
+[4,'Headphone Wireless','Elektronik','🎧',499000,599000,4.9,12,'Bluetooth 5.3, noise cancelling, baterai hingga 30 jam.'],
+[5,'Smartwatch Fit','Elektronik','⌚',749000,0,4.5,8,'Pantau detak jantung, langkah, dan tidur. Tahan air 5 ATM.'],
+[6,'Power Bank 20.000 mAh','Elektronik','🔋',229000,0,4.7,40,'Fast charging 22,5W dengan dua port output.'],
+[7,'Lampu Meja LED','Rumah','💡',129000,159000,4.6,22,'Lampu belajar 3 mode cahaya, dimmable, hemat energi.'],
+[8,'Set Peralatan Masak','Rumah','🍳',389000,0,4.8,10,'Set 5 pcs anti lengket, aman untuk semua jenis kompor.'],
+[9,'Diffuser Aromaterapi','Rumah','🪴',99000,0,4.4,35,'Diffuser ultrasonik dengan lampu malam, kapasitas 300 ml.'],
+[10,'Kopi Arabika Bali 250g','Makanan','☕',75000,0,4.9,60,'Biji kopi arabika Kintamani, sangrai medium, aroma buah dan cokelat.'],
+[11,'Madu Hutan Murni 500ml','Makanan','🍯',95000,110000,4.8,28,'Madu murni tanpa campuran gula, langsung dari petani lebah.'],
+[12,'Keripik Singkong Pedas','Makanan','🥔',25000,0,4.5,100,'Renyah dan gurih dengan level pedas yang pas. Kemasan 200g.']
+].map(a=>({id:a[0],n:a[1],c:a[2],e:a[3],p:a[4],o:a[5],r:a[6],s:a[7],d:a[8]}));
+const CATS=['Semua','Fashion','Elektronik','Rumah','Makanan'];
+const COUR=[['JNE Reguler',18000,'2-3 hari'],['J&T Express',15000,'2-4 hari'],['SiCepat BEST',14000,'1-2 hari'],['GoSend Instan',35000,'Hari ini']];
+const PAY=[['QRIS','Scan dengan e-wallet apa pun'],['Virtual Account BCA','Transfer via ATM/m-banking'],['GoPay','Bayar lewat aplikasi'],['Kartu Kredit','Visa / Mastercard'],['Indomaret','Bayar di kasir terdekat']];
+let ORD=[
+['INV-1042','Budi Santoso','Headphone Wireless x1',499000,'Selesai','27 Sep'],
+['INV-1043','Ayu Lestari','Kopi Arabika Bali x3',225000,'Dikirim','29 Sep'],
+['INV-1044','Made Putra','Sneakers Urban x1',349000,'Diproses','30 Sep'],
+['INV-1045','Dewi Anggraini','Set Peralatan Masak x1',389000,'Dibayar','1 Okt'],
+['INV-1046','Rizky Pratama','Power Bank x2',458000,'Menunggu Bayar','2 Okt']];
+const S={view:'store',cat:'Semua',q:'',cart:{},cour:0,pay:0,voucher:'',last:null};
+const prod=id=>PR.find(p=>p.id===id);
+const cnt=()=>Object.values(S.cart).reduce((a,b)=>a+b,0);
+const sub=()=>Object.entries(S.cart).reduce((a,[i,q])=>a+prod(+i).p*q,0);
+const disc=()=>S.voucher==='DEMO10'?sub()*0.1:0;
+const total=()=>sub()-disc()+(cnt()?COUR[S.cour][1]:0);
+function go(v){S.view=v;closeAll();render();scrollTo(0,0)}
+function closeAll(){['ovm','ovc'].forEach(i=>$('#'+i).classList.remove('show'))}
+function add(id,q=1){const p=prod(id);S.cart[id]=Math.min((S.cart[id]||0)+q,p.s);cartUpd();toast()}
+function toast(){const b=document.querySelector('.cartb');b.style.transform='scale(1.12)';setTimeout(()=>b.style.transform='',180)}
+function chg(id,d){S.cart[id]=(S.cart[id]||0)+d;if(S.cart[id]<=0)delete S.cart[id];cartUpd();openCart()}
+function cartUpd(){$('#cc').textContent=cnt()}
+function card(p){return `<div class="pc" onclick="openP(${p.id})"><div class="pic" style="background:${C[p.id%6]}">${p.e}</div><div class="pb"><span class="pn">${p.n}</span><span class="pm">⭐ ${p.r} &middot; Stok ${p.s}</span><span class="pr">${rp(p.p)}${p.o?`<span class="old">${rp(p.o)}</span>`:''}</span><button class="btn sec" onclick="event.stopPropagation();add(${p.id})">+ Keranjang</button></div></div>`}
+function openP(id){const p=prod(id);$('#modal').innerHTML=`<div class="pic" style="height:180px;font-size:84px;background:${C[p.id%6]}">${p.e}</div><div style="padding:18px"><span class="tag">${p.c}</span><h2 style="margin:8px 0 2px">${p.n}</h2><div class="pm">⭐ ${p.r} &middot; Stok ${p.s} &middot; Terjual ${p.s*7}</div><div class="pr" style="font-size:22px;margin:8px 0">${rp(p.p)}${p.o?`<span class="old">${rp(p.o)}</span>`:''}</div><p>${p.d}</p><div style="display:flex;gap:8px"><button class="btn" style="flex:1" onclick="add(${p.id});closeAll()">Tambah ke Keranjang</button><button class="btn sec" onclick="closeAll()">Tutup</button></div></div>`;$('#ovm').classList.add('show')}
+function openCart(){const it=Object.entries(S.cart);$('#drawer').innerHTML=`<div class="dh"><span>Keranjang (${cnt()})</span><button class="x" onclick="closeAll()">✕</button></div><div class="db">${it.length?it.map(([i,q])=>{const p=prod(+i);return `<div class="ci"><div class="e" style="background:${C[p.id%6]}">${p.e}</div><div style="flex:1"><div class="pn">${p.n}</div><div class="pr">${rp(p.p)}</div></div><div class="qty"><button onclick="chg(${i},-1)">−</button>${q}<button onclick="chg(${i},1)">+</button></div></div>`}).join(''):'<div class="ctr pm">Keranjang masih kosong</div>'}</div><div class="df"><div class="row"><span>Subtotal</span><b>${rp(sub())}</b></div><button class="btn" style="width:100%" ${it.length?'':'disabled'} onclick="go('checkout')">Lanjut ke Checkout</button></div>`;$('#ovc').classList.add('show')}
+function vStore(){const l=PR.filter(p=>(S.cat==='Semua'||p.c===S.cat)&&p.n.toLowerCase().includes(S.q.toLowerCase()));
+return `<div class="hero"><h1>Promo Akhir Bulan 🎉</h1><p>Diskon hingga 20% &middot; Pakai kode <b>DEMO10</b> saat checkout</p><button class="btn" style="background:#fff;color:#2563eb" onclick="S.cat='Elektronik';render()">Belanja Elektronik</button></div><div class="chips">${CATS.map(c=>`<button class="chip ${c===S.cat?'on':''}" onclick="S.cat='${c}';render()">${c}</button>`).join('')}</div>${l.length?`<div class="grid">${l.map(card).join('')}</div>`:'<div class="ctr pm">Produk tidak ditemukan</div>'}`}
+function vCheckout(){if(!cnt())return `<div class="card ctr"><div class="big">🛒</div><p>Keranjang kosong</p><button class="btn" onclick="go('store')">Mulai Belanja</button></div>`;
+return `<h2>Checkout</h2><div class="two"><div>
+<div class="card"><h3>1. Alamat Pengiriman</h3><label class="f">Nama</label><input class="i" value="Sena Demo"><label class="f">No. WhatsApp</label><input class="i" value="0812-3456-7890"><label class="f">Alamat lengkap</label><input class="i" value="Jl. Raya Amlapura No. 10, Karangasem, Bali"></div>
+<div class="card"><h3>2. Kurir Pengiriman</h3>${COUR.map((c,i)=>`<div class="opt ${S.cour===i?'on':''}" onclick="S.cour=${i};render()"><span>${c[0]}<br><small class="pm">Estimasi ${c[2]}</small></span><b>${rp(c[1])}</b></div>`).join('')}</div>
+<div class="card"><h3>3. Metode Pembayaran</h3>${PAY.map((c,i)=>`<div class="opt ${S.pay===i?'on':''}" onclick="S.pay=${i};render()"><span>${c[0]}<br><small class="pm">${c[1]}</small></span><span>${S.pay===i?'✔':''}</span></div>`).join('')}</div></div>
+<div><div class="card"><h3>Ringkasan Pesanan</h3>${Object.entries(S.cart).map(([i,q])=>`<div class="row"><span>${prod(+i).n} x${q}</span><span>${rp(prod(+i).p*q)}</span></div>`).join('')}
+<div style="display:flex;gap:6px;margin-top:10px"><input class="i" id="vc" placeholder="Kode voucher" value="${S.voucher}"><button class="btn sec" onclick="S.voucher=$('#vc').value.trim().toUpperCase();render()">Pakai</button></div>${S.voucher&&S.voucher!=='DEMO10'?'<small style="color:var(--bad)">Kode tidak valid (coba DEMO10)</small>':''}
+<div class="row" style="margin-top:10px"><span>Subtotal</span><span>${rp(sub())}</span></div><div class="row"><span>Ongkir</span><span>${rp(COUR[S.cour][1])}</span></div>${disc()?`<div class="row" style="color:var(--ok)"><span>Diskon voucher</span><span>-${rp(disc())}</span></div>`:''}<div class="row tot"><span>Total</span><span>${rp(total())}</span></div>
+<button class="btn" style="width:100%;margin-top:10px" onclick="placeOrder()">Buat Pesanan</button></div></div></div>`}
+function placeOrder(){const id='INV-'+(1047+ORD.length-5);const t=total();const items=Object.entries(S.cart).map(([i,q])=>prod(+i).n+' x'+q).join(', ');S.last={id,t,pay:PAY[S.pay][0],paid:false};ORD.push([id,'Sena Demo',items,t,'Menunggu Bayar','2 Okt']);S.cart={};S.voucher='';cartUpd();go('done')}
+function pay(){S.last.paid=true;ORD[ORD.length-1][4]='Dibayar';render()}
+function vDone(){const o=S.last;return `<div class="card ctr"><div class="big">${o.paid?'✅':'⏳'}</div><h2>${o.paid?'Pembayaran Berhasil':'Menunggu Pembayaran'}</h2><p class="pm">No. pesanan <b>${o.id}</b> &middot; ${o.pay}</p><div class="pr" style="font-size:24px">${rp(o.t)}</div>${o.paid?'<p>Terima kasih! Pesanan Anda akan segera diproses.</p><button class="btn" onclick="go(\'store\')">Belanja Lagi</button> <button class="btn sec" onclick="go(\'admin\')">Lihat di Admin</button>':'<p class="pm">Ini simulasi. Klik tombol untuk meniru notifikasi pembayaran dari payment gateway.</p><button class="btn ok" onclick="pay()">Simulasikan Pembayaran</button>'}</div>`}
+function vAdmin(){const rev=ORD.filter(o=>o[4]!=='Menunggu Bayar').reduce((a,o)=>a+o[3],0)+12400000;const m=[['Mei',60],['Jun',45],['Jul',72],['Agu',58],['Sep',90],['Okt',30]];
+const tg=s=>({Selesai:'g',Dikirim:'',Diproses:'y',Dibayar:'y','Menunggu Bayar':'r'}[s]||'');
+return `<h2>Dashboard Admin</h2><div class="stats"><div class="stat"><b>${rp(rev)}</b><span>Pendapatan bulan ini</span></div><div class="stat"><b>${ORD.length+86}</b><span>Total pesanan</span></div><div class="stat"><b>1.284</b><span>Pelanggan</span></div><div class="stat"><b>${PR.filter(p=>p.s<15).length}</b><span>Stok menipis</span></div></div>
+<div class="card"><h3>Penjualan 6 Bulan Terakhir</h3><div class="chart" style="margin-bottom:24px">${m.map(x=>`<div style="height:${x[1]}%"><small>${x[0]}</small></div>`).join('')}</div></div>
+<div class="card"><h3>Pesanan Terbaru</h3><div class="tw"><table><tr><th>No.</th><th>Pelanggan</th><th>Item</th><th>Total</th><th>Status</th><th>Tgl</th></tr>${ORD.slice().reverse().map(o=>`<tr><td>${o[0]}</td><td>${o[1]}</td><td>${o[2]}</td><td>${rp(o[3])}</td><td><span class="tag ${tg(o[4])}">${o[4]}</span></td><td>${o[5]}</td></tr>`).join('')}</table></div></div>
+<div class="card"><h3>Produk &amp; Stok</h3><div class="tw"><table><tr><th>Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Rating</th></tr>${PR.map(p=>`<tr><td>${p.e} ${p.n}</td><td>${p.c}</td><td>${rp(p.p)}</td><td><span class="tag ${p.s<15?'r':'g'}">${p.s}</span></td><td>⭐ ${p.r}</td></tr>`).join('')}</table></div></div>`}
+function render(){const v=S.view;$('#n-store').className=v!=='admin'?'on':'';$('#n-admin').className=v==='admin'?'on':'';
+$('#app').innerHTML=v==='store'?vStore():v==='checkout'?vCheckout():v==='done'?vDone():vAdmin()}
+$('#q').addEventListener('input',e=>{S.q=e.target.value;if(S.view!=='store')S.view='store';render();e.target.focus()});
+render();
+</script>
+</body>
+</html>
